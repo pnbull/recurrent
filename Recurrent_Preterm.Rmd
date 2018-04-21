@@ -1,0 +1,10 @@
+---
+title: "Recurrent_Preterm"
+output: html_notebook
+---
+
+```{r}
+dta <- read.csv("/Users/pnbullard/Documents/UW/Epi514/P23 Recurrent Preterm/P23_recurrent_preterm.csv")
+
+my_vars <- c("momage", "cmage", "momedu03", "momrace", "cigs_1st", "cigs_2nd", "cigs_3rd", "cigs_bef", "celivpay", "cmpayid1", "cmpayid2", "diabetes", )
+```
