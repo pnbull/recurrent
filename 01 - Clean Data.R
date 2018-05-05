@@ -4,6 +4,10 @@
 library(uwIntroStats)
 
 pt_raw <- read.csv("C:/Users/Llamaface/Desktop/EPI 514/Data/P23_recurrent_preterm_04_24.csv")
+<<<<<<< HEAD
+=======
+pt_raw <- read.csv("/Users/pnbullard/Documents/UW/Epi514/P23 Recurrent Preterm/P23_recurrent_preterm_04_24.csv")
+>>>>>>> 4d95e16b8495105cfb0fe245d1f9a02a807a77a3
 
 names(pt_raw)
 
