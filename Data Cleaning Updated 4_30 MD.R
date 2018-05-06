@@ -164,6 +164,9 @@ pt[,cigs] <- sapply(pt[,cigs],function(x) ifelse(x==99, NA, x))
 
 pt$smoked_p1 <- ifelse(pt$cigs_1st_p1>0 | pt$cigs_2nd_p1>0 | pt$cigs_3rd_p1>0,
                        "Yes", "No")
+                    
+pt$smoked_p2 <- ifelse(pt$cigs_1st_p2>0 | pt$cigs_2nd_p2>0 | pt$cigs_3rd_p2>0,
+                       "Yes", "No")
 
 ###payer
 #replace 9's with NA
