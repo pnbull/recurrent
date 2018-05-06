@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### 514 Preterm Births ###
 ### Clinical subtype algorithm ###
 ### (See bottom for variable definitions!) ###
@@ -117,6 +118,8 @@ subsettable(pt$subtype_p1, pt$subtype_p2, useNA='ifany')
   #   5= Cesarean without Trial Labor
   #   9= Unknown
 =======
+=======
+>>>>>>> 720dce61d9f5a75982cda5a62f7b119683e5c472
 ### 514 Preterm Births ###
 ### Clinical subtype algorithm ###
 ### (See bottom for variable definitions!) ###
@@ -184,10 +187,18 @@ NA)
 pt$subtype_p2 <- ifelse(is.na(pt$subtype_node_p2), NA, substr(pt$subtype_node_p2, 1, 5))
 pt$node_p2 <- ifelse(is.na(pt$subtype_node_p2), NA, substr(pt$subtype_node_p2, 7, 8))
 
+<<<<<<< HEAD
 
 ### Review algorithm assignment ###
 
 subsettable(pt$subtype_p1, pt$subtype_p2, useNA='ifany') 
+=======
+write.csv(pt, "pt_cleanWsubtype.csv")
+
+### Review algorithm assignment ###
+
+#subsettable(pt$subtype_p1, pt$subtype_p2, useNA='ifany') 
+>>>>>>> 720dce61d9f5a75982cda5a62f7b119683e5c472
 # 2,338 total recurrent preterms (Ananth started with 3,559)
 
 prop.table(table(pt$subtype_p1)) # 33% indicated, 67% spontaneous
@@ -239,4 +250,7 @@ prop.table(table(pt$node_p2)) # 9% I1, 33% I2, 14% S1, 18% S2, 26% S3
   #   4= Cesarean with Trial of Labor
   #   5= Cesarean without Trial Labor
   #   9= Unknown
+<<<<<<< HEAD
 >>>>>>> 4d95e16b8495105cfb0fe245d1f9a02a807a77a3
+=======
+>>>>>>> 720dce61d9f5a75982cda5a62f7b119683e5c472
