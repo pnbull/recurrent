@@ -5,7 +5,7 @@
 #Notes: 
 # 1. Copied code from Jessica's "01 - Clean Data.R" file
 # 2. Applied rules dictated in "Variable Description" in the shared google drive
-# 
+
 
 library(tidyverse)
 
