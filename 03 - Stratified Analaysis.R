@@ -130,9 +130,9 @@ stratified_fx(pt$momrace_p2_fac)
 stratified_fx(pt$smoked_p2)
 stratified_fx(pt$delivpay_p2_fac)
 stratified_fx(pt$diabetes_p2_fac)
-stratified_fx(pt$hyper_p2) #need ICD9s
-stratified_fx(pt$preclamp_p2) #need ICD9s
-stratified_fx(pt$pracprev_p2) #not created yet, need ICD9s
+stratified_fx(pt$htnICDp2.b) #from CHARS
+stratified_fx(pt$preclampICDp2.b) #from CHARS
+stratified_fx(pt$placentaPrevICDp2.b) #from CHARS
 stratified_fx(pt$any_inf_p1)
 stratified_fx(pt$bmi_cut_p1)
 
