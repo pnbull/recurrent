@@ -10,7 +10,8 @@
 library(tidyverse)
 
 #Load in raw data
-pt <- readRDS("/Users/apple/Downloads/P23_recurrent_preterm_04_24.rds")
+#pt <- readRDS("/Users/apple/Downloads/P23_recurrent_preterm_04_24.rds")
+pt <- readRDS("/Users/pnbullard/Documents/UW/Epi514/P23 Recurrent Preterm/P23_recurrent_preterm_04_24.rds")
 
 
 #subset to only those where p1 is first birth
@@ -43,7 +44,7 @@ pt <- subset(pt, select = c(exposed, mbgap_p2, momage_p1, momedu03_p1,
                                 dmethfin_p2, fet_pres_p2, breech_p2, placprev_p2, otforcep_p2,
                                 cmdiag1_p2:cmdiag25_p2, cbdiag1_p2:cbdiag25_p2, 
                                 cmproc1_p2:cmproc25_p2, cbproc1_p2:cbproc25_p2, prewght_p1,
-                                prewght_p2, momhgt_p1, momhgt_p2, bmi_p1, bmi_p2)
+                                prewght_p2, momhgt_p1, momhgt_p2, bmi_p1, bmi_p2))
 
 
 ########

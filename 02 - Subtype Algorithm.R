@@ -65,10 +65,11 @@ NA)
 pt$subtype_p2 <- ifelse(is.na(pt$subtype_node_p2), NA, substr(pt$subtype_node_p2, 1, 5))
 pt$node_p2 <- ifelse(is.na(pt$subtype_node_p2), NA, substr(pt$subtype_node_p2, 7, 8))
 
+write.csv(pt, "pt_cleanWsubtype.csv")
 
 ### Review algorithm assignment ###
 
-subsettable(pt$subtype_p1, pt$subtype_p2, useNA='ifany') 
+#subsettable(pt$subtype_p1, pt$subtype_p2, useNA='ifany') 
 # 2,338 total recurrent preterms (Ananth started with 3,559)
 
 prop.table(table(pt$subtype_p1)) # 33% indicated, 67% spontaneous
