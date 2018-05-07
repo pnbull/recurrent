@@ -67,12 +67,12 @@ t8 <- epi.2by2(dat=t7, method="cohort.count", conf.level=0.95, units=100,
 
 #Crude Indicated P1 with Term P2
 t9 <- table(pt$indcP1.b, pt$termP2.b, dnn = c("p1I", "p2T"))
-t10 <- epi.2by2(dat=t5, method="cohort.count", conf.level=0.95, units=100, 
+t10 <- epi.2by2(dat=t9, method="cohort.count", conf.level=0.95, units=100, 
                outcome = "as.columns")
 
 #Crude Spontaneous P1 with Term P2
 t11 <- table(pt$sponP1.b, pt$termP2.b, dnn = c("p1S", "p2T"))
-t12 <- epi.2by2(dat=t7, method="cohort.count", conf.level=0.95, units=100, 
+t12 <- epi.2by2(dat=t11, method="cohort.count", conf.level=0.95, units=100, 
                outcome = "as.columns")
 
 
