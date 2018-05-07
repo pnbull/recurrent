@@ -1,3 +1,4 @@
+library(epiR)
 
 pt <- read.csv("/Users/pnbullard/Documents/GitHub/recurrent/pt_cleanWsubtype.csv")
 pt <- read.csv("C:/Users/Llamaface/Documents/GitHub/recurrent/pt_cleanWsubtype.csv")
@@ -42,8 +43,7 @@ for (i in 1:nrow(pt)){
   if (!is.na(pt[i, "gestest_p2"]) & pt[i, "gestest_p2"] >= 37){pt$termP2.b[i] <- 0}
 }
 
-
-library(epiR)
+write.csv(pt, "pt_cleanWsubtype.csv")
 
 #Crude Spontaneous P1 with Spontaneous P2
 t1 <- table(pt$sponP1.b, pt$sponP2.b, dnn = c("p1S", "p2S"))
@@ -67,75 +67,72 @@ t8 <- epi.2by2(dat=t7, method="cohort.count", conf.level=0.95, units=100,
 
 #Crude Indicated P1 with Term P2
 t9 <- table(pt$indcP1.b, pt$termP2.b, dnn = c("p1I", "p2T"))
-t10 <- epi.2by2(dat=t5, method="cohort.count", conf.level=0.95, units=100, 
+t10 <- epi.2by2(dat=t9, method="cohort.count", conf.level=0.95, units=100, 
                outcome = "as.columns")
 
 #Crude Spontaneous P1 with Term P2
 t11 <- table(pt$sponP1.b, pt$termP2.b, dnn = c("p1S", "p2T"))
-t12 <- epi.2by2(dat=t7, method="cohort.count", conf.level=0.95, units=100, 
+t12 <- epi.2by2(dat=t11, method="cohort.count", conf.level=0.95, units=100, 
                outcome = "as.columns")
 
 
 ##Run analysis by different levels of potential effect modifiers
 #Create function to create table and run epi.2by2
-
-ss_fx <- function(x){
-  SS <- with(x, table(sponP1.b, sponP2.b))
+stratified_fx <- function(x, byvar){
+  SS <- with(x, table(sponP1.b, sponP2.b, byvar))
+  ss2 <- epi.2by2(SS, method = "cohort.count", homogeneity = "breslow.day")
   print("SS")
-  print(epi.2by2(SS, method = "cohort.count", homogeneity = "breslow.day"))
-}
+  print(ss2$massoc$RR.crude.wald)
+  print(ss2$massoc$RR.strata.wald)
+  print(ss2$massoc$RR.homog)
 
-is_fx <- function(x){
-  IS <- with(x, table(indcP1.b, sponP2.b))
+  IS <- with(x, table(indcP1.b, sponP2.b, byvar))
+  is2 <- epi.2by2(IS, method = "cohort.count", homogeneity = "breslow.day")
   print("IS")
-  print(epi.2by2(IS, method = "cohort.count", homogeneity = "breslow.day"))
-}
+  print(is2$massoc$RR.crude.wald)
+  print(is2$massoc$RR.strata.wald)
+  print(is2$massoc$RR.homog)
 
-ii_fx <- function(x){
-  II <- with(x, table(indcP1.b, indcP2.b))
+  II <- with(x, table(indcP1.b, indcP2.b, byvar))
+  ii2 <- epi.2by2(II, method = "cohort.count", homogeneity = "breslow.day")
   print("II")
-  print(epi.2by2(II, method = "cohort.count", homogeneity = "breslow.day"))
-}
+  print(ii2$massoc$RR.crude.wald)
+  print(ii2$massoc$RR.strata.wald)
+  print(ii2$massoc$RR.homog)
 
-si_fx <- function(x){
-  SI <- with(x, table(sponP1.b, indcP2.b))
+  SI <- with(x, table(sponP1.b, indcP2.b, byvar))
+  si2 <-epi.2by2(SI, method = "cohort.count", homogeneity = "breslow.day")
   print("SI")
-  print(epi.2by2(SI, method = "cohort.count", homogeneity = "breslow.day"))
-}
-  
-it_fx <- function(x){
-  IT <- with(x, table(indcP1.b, termP2.b))
+  print(si2$massoc$RR.crude.wald)
+  print(si2$massoc$RR.strata.wald)
+  print(si2$massoc$RR.homog)
+
+  IT <- with(x, table(indcP1.b, termP2.b, byvar))
+  it2 <- epi.2by2(IT, method = "cohort.count", homogeneity = "breslow.day")
   print("IT")
-  print(epi.2by2(IT, method = "cohort.count", homogeneity = "breslow.day"))
-}
-  
-st_fx <- function(x){
-  ST <- with(x, table(sponP1.b, termP2.b))
+  print(it2$massoc$RR.crude.wald)
+  print(it2$massoc$RR.strata.wald)
+  print(it2$massoc$RR.homog)
+
+  ST <- with(x, table(sponP1.b, termP2.b, byvar))
+  st2 <- epi.2by2(ST, method = "cohort.count", homogeneity = "breslow.day")
   print("ST")
-  print(epi.2by2(ST, method = "cohort.count", homogeneity = "breslow.day"))
+  print(st2$massoc$RR.crude.wald)
+  print(st2$massoc$RR.strata.wald)
+  print(st2$massoc$RR.homog)
 }
 
 #Run above function by different levels of potential effect modifiers
-stratified_fx <- function(x){
-  by(pt, x, ss_fx)
-  by(pt, x, si_fx)
-  by(pt, x, ii_fx)
-  by(pt, x, is_fx)
-  by(pt, x, it_fx)
-  by(pt, x, st_fx)
-}
-stratified_fx(pt$ipi_fac)
-stratified_fx(pt$momage_p2_fac)
-stratified_fx(pt$momrace_p2_fac)
-stratified_fx(pt$smoked_p2)
-stratified_fx(pt$delivpay_p2_fac)
-stratified_fx(pt$diabetes_p2_fac)
-stratified_fx(pt$hyper_p2) #need ICD9s
-stratified_fx(pt$preclamp_p2) #need ICD9s
-stratified_fx(pt$pracprev_p2) #not created yet, need ICD9s
-stratified_fx(pt$any_inf_p1)
-stratified_fx(pt$bmi_cut_p1)
+stratified_fx(pt, pt$ipi_fac)
+stratified_fx(pt, pt$momrace_p2_fac)
+stratified_fx(pt, pt$momage_p2_fac)
+stratified_fx(pt, pt$momedu03_p2_fac2)
+stratified_fx(pt, pt$smoked_p2)
+stratified_fx(pt, pt$delivpay_p2_fac)
+stratified_fx(pt, pt$diabetes_p2_fac)
+stratified_fx(pt, pt$htnICDp2.b) #from CHARS
+stratified_fx(pt, pt$preclampICDp2.b) #from CHARS
+stratified_fx(pt, pt$placentaPrevICDp2.b) #from CHARS
+stratified_fx(pt, pt$any_inf_p2)
+stratified_fx(pt, pt$bmi_cut_p2)
 
-# It doesn't look like we can get the breslow-day statistic using
-# this "by" code, since it thinks of each strata separately and
-# wouldn't know what to compare to.  Is that right?

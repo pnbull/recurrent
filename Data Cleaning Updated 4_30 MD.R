@@ -61,13 +61,17 @@ pt$momage_p2[pt$momage_p2 == 99 |
                pt$momage_p2 < 13|
                pt$momage_p2 > 57] <- NA 
 
-#create factor variable
+#create factor variables
 pt$momage_p1_fac <- NA
+pt$momage_p2_fac <- NA
 
 pt$momage_p1_fac[pt$momage_p1 <= 20] <- "Under 21"
 pt$momage_p1_fac[pt$momage_p1 > 20 & pt$momage_p1 <= 35] <- "21-35"
 pt$momage_p1_fac[pt$momage_p1 > 35] <- "Over 35"
-table(pt$momage_p1, pt$momage_p1_fac) #check
+
+pt$momage_p2_fac[pt$momage_p2 <= 20] <- "Under 21"
+pt$momage_p2_fac[pt$momage_p2 > 20 & pt$momage_p2 <= 35] <- "21-35"
+pt$momage_p2_fac[pt$momage_p2 > 35] <- "Over 35"
 
 ### MOMEDU03
 #Set NA's if equals ".", 99, 09, or 0 
