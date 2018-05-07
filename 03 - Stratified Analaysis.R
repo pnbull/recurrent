@@ -126,7 +126,7 @@ stratified_fx <- function(x, byvar){
 stratified_fx(pt, pt$ipi_fac)
 stratified_fx(pt, pt$momrace_p2_fac)
 stratified_fx(pt, pt$momage_p2_fac)
-stratified_fx(pt, pt$momedu03_p2_fac)
+stratified_fx(pt, pt$momedu03_p2_fac2)
 stratified_fx(pt, pt$smoked_p2)
 stratified_fx(pt, pt$delivpay_p2_fac)
 stratified_fx(pt, pt$diabetes_p2_fac)
