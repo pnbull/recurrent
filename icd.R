@@ -22,10 +22,10 @@ pt$preclampICDp1.b <- rep(0, nrow(pt))
 pt$preclampICDp2.b <- rep(0, nrow(pt))
 
 #ICD codes for palcenta previa
-placPrevICD <- c("64101", "64111")
+placPrevICD <- c("64101", "64111", "64100", "64103", "64110", "64113")
 
 #ICD codes for hypertension
-htnICD <- as.character(seq(4010, 4050, by = 1))
+htnICD <- c(as.character(seq(4010, 4050, by = 1)), as.character(seq(64200, 64234, by = 1)))
 
 #ICD codes for preeclampsia
 preclamICD <- c("64240", "64241", "64242", "64243", "64244", "64250", "64251", "64252", 
