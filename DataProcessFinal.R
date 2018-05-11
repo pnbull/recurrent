@@ -12,10 +12,6 @@ library(tidyverse)
 #pt <- read.csv("C:/Users/Llamaface/Desktop/EPI 514/Data/P23_recurrent_preterm_04_24.csv")
 pt <- readRDS("/Users/pnbullard/Documents/UW/Epi514/P23 Recurrent Preterm/P23_recurrent_preterm_04_24.rds")
 
-#subset to only those where p1 is first birth
-# reduces data from 101,088 to 86,554 women
-pt <- pt[pt$parity_p1 == 0, ]
-
 
 # keep only variables we're possibly interested in
 # 292 variables remaining
@@ -544,18 +540,24 @@ pt[plac_prev_rows, "placprev_chars_p1"] <- "Placenta Previa"
 # if there was PROM, then birth is spontaneous regardless of other codes
 # if no prom, then continue
 pt$subtype_node_p1 <- ifelse(pt$gestest_p1 < 37,
-                             ifelse(pt$rupmem_p1 == "Yes", "SPONT-S1",
+                             ifelse(!is.na(pt$rupmem_p1) & pt$rupmem_p1 == "Yes", "SPONT-S1",
                                     # if labor was induced and there was no prom, then birth is indicated
-                                    ifelse(pt$rupmem_p1 == "No", 
-                                           ifelse(pt$indlab_p1 == "Yes", "INDIC-I1",
+                                    ifelse(!is.na(pt$rupmem_p1) & pt$rupmem_p1 == "No", 
+                                           ifelse(!is.na(pt$indlab_p1) & pt$indlab_p1 == "Yes", "INDIC-I1",
                                                   # If labor was not induced and there was a code implying labor existed, then birth was spontaneous 
-                                                  ifelse(pt$indlab_p1 == "No", 
-                                                         ifelse(pt$precipl_p1 == "Yes" | pt$longlab_p1 == "Yes" | pt$forcfail_p1 == "Y" | 
-                                                                  pt$vacfail_p1 == "Y"   | pt$stimlab_p1 == "Yes" | pt$dmethfin_p1 == 4,
+                                                  ifelse(!is.na(pt$indlab_p1) & pt$indlab_p1 == "No", 
+                                                         ifelse((!is.na(pt$precipl_p1) & pt$precipl_p1 == "Yes") | 
+                                                                (!is.na(pt$longlab_p1) & pt$longlab_p1 == "Yes") | 
+                                                                (!is.na(pt$forcfail_p1) & pt$forcfail_p1 == "Y") | 
+                                                                (!is.na(pt$vacfail_p1) & pt$vacfail_p1 == "Y")   | 
+                                                                (!is.na(pt$stimlab_p1) & pt$stimlab_p1 == "Yes") | 
+                                                                (!is.na(pt$dmethfin_p1) & pt$dmethfin_p1 == 4),
                                                                 "SPONT-S2",
                                                                 # among remaining records, if vaginal delivery then assume spontaneous labor
                                                                 # if not vaginal delivery then assume indicated birth
-                                                                ifelse(pt$spontdel_p1 == "Yes" |  pt$vacuum_p1 == "Yes" | pt$otforcep_p1 == "Yes", 
+                                                                ifelse((!is.na(pt$spontdel_p1) & pt$spontdel_p1 == "Yes") |
+                                                                       (!is.na(pt$vacuum_p1) & pt$vacuum_p1 == "Yes") | 
+                                                                       (!is.na(pt$otforcep_p1) & pt$otforcep_p1 == "Yes"), 
                                                                        "SPONT-S3", "INDIC-I2")
                                                          ),
                                                          NA)
@@ -563,6 +565,7 @@ pt$subtype_node_p1 <- ifelse(pt$gestest_p1 < 37,
                                            NA)
                              ),
                              NA)
+
 
 pt$subtype_p1 <- ifelse(is.na(pt$subtype_node_p1), NA, substr(pt$subtype_node_p1, 1, 5))
 pt$node_p1 <- ifelse(is.na(pt$subtype_node_p1), NA, substr(pt$subtype_node_p1, 7, 8))
@@ -573,18 +576,24 @@ pt$node_p1 <- ifelse(is.na(pt$subtype_node_p1), NA, substr(pt$subtype_node_p1, 7
 # if there was PROM, then birth is spontaneous regardless of other codes
 # if no prom, then continue
 pt$subtype_node_p2 <- ifelse(pt$gestest_p2 < 37,
-                             ifelse(pt$rupmem_p2 == "Yes", "SPONT-S1",
+                             ifelse(!is.na(pt$rupmem_p2) & pt$rupmem_p2 == "Yes", "SPONT-S1",
                                     # if labor was induced and there was no prom, then birth is indicated
-                                    ifelse(pt$rupmem_p2 == "No", 
-                                           ifelse(pt$indlab_p2 == "Yes", "INDIC-I1",
+                                    ifelse(!is.na(pt$rupmem_p2) & pt$rupmem_p2 == "No", 
+                                           ifelse(!is.na(pt$indlab_p2) & pt$indlab_p2 == "Yes", "INDIC-I1",
                                                   # If labor was not induced and there was a code implying labor existed, then birth was spontaneous 
-                                                  ifelse(pt$indlab_p2 == "No", 
-                                                         ifelse(pt$precipl_p2 == "Yes" | pt$longlab_p2 == "Yes" | pt$forcfail_p2 == "Y" | 
-                                                                  pt$vacfail_p2 == "Y"   | pt$stimlab_p2 == "Yes" | pt$dmethfin_p2 == 4,
+                                                  ifelse(!is.na(pt$indlab_p2) & pt$indlab_p2 == "No", 
+                                                         ifelse((!is.na(pt$precipl_p2) & pt$precipl_p2 == "Yes") | 
+                                                                  (!is.na(pt$longlab_p2) & pt$longlab_p2 == "Yes") | 
+                                                                  (!is.na(pt$forcfail_p2) & pt$forcfail_p2 == "Y") | 
+                                                                  (!is.na(pt$vacfail_p2) & pt$vacfail_p2 == "Y")   | 
+                                                                  (!is.na(pt$stimlab_p2) & pt$stimlab_p2 == "Yes") | 
+                                                                  (!is.na(pt$dmethfin_p2) & pt$dmethfin_p2 == 4),
                                                                 "SPONT-S2",
                                                                 # among remaining records, if vaginal delivery then assume spontaneous labor
                                                                 # if not vaginal delivery then assume indicated birth
-                                                                ifelse(pt$spontdel_p2 == "Yes" |  pt$vacuum_p2 == "Yes" | pt$otforcep_p2 == "Yes", 
+                                                                ifelse((!is.na(pt$spontdel_p2) & pt$spontdel_p2 == "Yes") |
+                                                                         (!is.na(pt$vacuum_p2) & pt$vacuum_p2 == "Yes") | 
+                                                                         (!is.na(pt$otforcep_p2) & pt$otforcep_p2 == "Yes"), 
                                                                        "SPONT-S3", "INDIC-I2")
                                                          ),
                                                          NA)
@@ -618,5 +627,22 @@ pt$indic_p1 <- factor(pt$indic_p1, labels = c("INDIC_p1", "TERM_p1"))
 pt$indic_p2 <- ifelse(pt$subtype_p2 == "INDIC", 0, NA)
 pt[!is.na(pt$gestest_p2) & pt$gestest_p2 >= 37, "indic_p2"] <- 1
 pt$indic_p2 <- factor(pt$indic_p2, labels = c("INDIC_p2", "TERM_p2"))
+                    
+                    
+### EXCLUSIONS ###
+#subset to those where p1 is first birth
+# reduces data from 101,088 to 86,554 women
+pt <- pt[pt$parity_p1 == 0, ]
+
+#subset to those with non-missing gestest in both pregnancies
+# reduces data from 86,554 to 86,453
+pt <- pt[!is.na(pt$gestest_p1) & !is.na(pt$gestest_p1), ]
+table(pt$exposed)
+
+#subset to term and classified preterm
+pt2 <- pt[(!is.na(pt$indic_p1) | !is.na(pt$spont_p1)) 
+        & (!is.na(pt$indic_p2) | !is.na(pt$spont_p2)), ]
+table(pt2$subtype_p1, useNA = "ifany")
+                    
 
 write.csv(pt, file = "ptFinal2.csv")
