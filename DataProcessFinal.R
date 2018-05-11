@@ -640,9 +640,9 @@ pt <- pt[!is.na(pt$gestest_p1) & !is.na(pt$gestest_p1), ]
 table(pt$exposed)
 
 #subset to term and classified preterm
-pt2 <- pt[(!is.na(pt$indic_p1) | !is.na(pt$spont_p1)) 
+pt <- pt[(!is.na(pt$indic_p1) | !is.na(pt$spont_p1)) 
         & (!is.na(pt$indic_p2) | !is.na(pt$spont_p2)), ]
-table(pt2$subtype_p1, useNA = "ifany")
+table(pt$subtype_p1, useNA = "ifany")
                     
 
 write.csv(pt, file = "ptFinal2.csv")
